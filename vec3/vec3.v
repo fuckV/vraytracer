@@ -2,6 +2,7 @@ module vec3
   
 import math
 
+pub
 struct Vec {
    mut:
        i f64
@@ -95,16 +96,16 @@ pub fn (v Vec) make_unit() Vec {
 
 pub fn (v Vec) to_rgb() RGB {
   return RGB {
-    u8(v.x()),
-    u8(v.y()),
-    u8(v.z())
+    byte(v.x()),
+    byte(v.y()),
+    byte(v.z())
   }
 }
 
 struct RGB {
-    r u8
-    g u8
-    b u8
+    r byte
+    g byte
+    b byte
 }
 
 pub fn (c RGB) str() string {
@@ -113,12 +114,13 @@ pub fn (c RGB) str() string {
 
 pub fn (c RGB) mul_scalar(k f64) RGB {
     return RGB{
-               u8(f64(c.r) * k),
-               u8(f64(c.g) * k),
-               u8(f64(c.b) * k)
+               byte(f64(c.r) * k),
+               byte(f64(c.g) * k),
+               byte(f64(c.b) * k)
                }
 }
-       
+
+pub       
 struct Ray {
   pub:
       a Vec
