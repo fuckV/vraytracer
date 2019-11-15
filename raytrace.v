@@ -1,4 +1,4 @@
-//module raytrace
+module main
   
 import math
 import vec3
@@ -60,9 +60,9 @@ fn reflect(v vec3.Vec, n vec3.Vec) vec3.Vec {
 fn refract(v vec3.Vec, n vec3.Vec, ni_over_nt f64) ?vec3.Vec {
         uv := v.make_unit()
         dt := uv.dot(n)
-        discriminant := 1.0 - ni_over_nt * ni_over_nt * ( 1.0 - dt * dt)
-        if discriminant > 0 {
-           return (uv - n.mul_scalar(dt)).mul_scalar(ni_over_nt) - n.mul_scalar(math.sqrt(discriminant))
+        discri_minant := 1.0 - ni_over_nt * ni_over_nt * ( 1.0 - dt * dt)
+        if discri_minant > 0 {
+           return (uv - n.mul_scalar(dt)).mul_scalar(ni_over_nt) - n.mul_scalar(math.sqrt(discri_minant))
         } else {
            return error('No refractiion')
         } 
@@ -101,11 +101,11 @@ fn (s Sphere) hit(r vec3.Ray, t_min f64, t_max f64) ?HitRecord {
     a := r.b.dot(r.b)
     b := 2.0 * oc.dot(r.b)
     c := oc.dot(oc) - s.radius * s.radius
-    discriminant := b * b - 4.0 * a * c
-    temp := if (discriminant > 0) {
-       (-b - math.sqrt(discriminant))/(2.0 * a)
+    discri_minant := b * b - 4.0 * a * c
+    temp := if (discri_minant > 0) {
+       (-b - math.sqrt(discri_minant))/(2.0 * a)
     } else {
-       (-b + math.sqrt(discriminant))/(2.0 * a)
+       (-b + math.sqrt(discri_minant))/(2.0 * a)
     }
     if (temp > t_min && temp < t_max) {
       mat := Material{s.mat.scatter, s.mat.albedo, s.mat.fuzz, s.mat.ref_idx}
@@ -189,6 +189,7 @@ fn random_point_in_sphere() vec3.Vec {
         return vec3.Vec{p.x(), p.y(), p.z()}
      }
    }
+   return vec3.Vec{0,0,0}
 }
        
 fn main() {
@@ -218,7 +219,7 @@ fn main() {
     lam2 := Material{ lambertian_scatter, vec3.Vec{0.8, 0.3 , 0.3}, 1, 0} 
     met1 := Material{ metal_scatter, vec3.Vec{1.0, 0.83, 0}, 0.1, 0}
     glass1 := Material{ glass_scatter, vec3.Vec{1.0, 1.0, 1.0}, 0.0, 1.5} 
-    mut h := HitList{[Sphere{vec3.Vec{0,0,0}, 0, lam1}; 4], 4}
+    mut h := HitList{[Sphere{vec3.Vec{0,0,0}, 0, lam1}].repeat(4), 4}
     h.list[0] = Sphere{vec3.Vec{0, -100.5, -1}, 100, lam1}
     h.list[1] = Sphere{vec3.Vec{0, 0, -1}, 0.5, lam2}
     h.list[2] = Sphere{vec3.Vec{1, 0, -1}, 0.5, met1}
