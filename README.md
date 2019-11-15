@@ -13,11 +13,11 @@ Output is ppm but this is converted with imagemagick `convert output.ppm output.
 Compile with `v.exe -o bin/raytrace.exe -cc msvc raytrace.v`  
 Run with `raytrace.exe > output.ppm`  
 Argument:  
---help `Show usage information`  
---width `The width of the generated image,default 1920`  
---height `The height of the generated image,default 1080`  
---rays `The number of rays raytraced for each pixel of the image,default 1000`  
---bouncedepth `The maximum amount of bounces the rays are allowed to do,default 50`
+`--help`       Show usage information  
+`--width`      The width of the generated image,default 1920  
+`--height`      The height of the generated image,default 1080  
+`--rays`        The number of rays raytraced for each pixel of the image,default 1000  
+`--bouncedepth` The maximum amount of bounces the rays are allowed to do,default 50
 
 ### Todo
 
